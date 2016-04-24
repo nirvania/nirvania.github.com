@@ -2,10 +2,237 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>nivania</title>
+<title>无标题文档</title>
+<link rel="stylesheet" href="stylesheets/base.css" />
+<style>
+*{margin:0;padding:0}
+html,body{height:100%;}
+.page{width:100%;height:0;position:relative;overflow:hidden;
+-webkit-transition:0.5s all ease;
+-moz-transition:0.5s all ease;
+-ms-transition:0.5s all ease;
+-o-transition:0.5s all ease;
+transition:0.5s all ease;}
+.page1{width:100%;height:100%;}
+.page2{background:#333}
+.page3{background:#963}
+.page4{background:#F99}
+/*p1*/
+.page1 .bg{width:100%;height:100%;opacity:0;;position:absolute;top:0;left:0;
+-webkit-transition:0.35s all ease;
+-moz-transition:0.35s all ease;
+-ms-transition:0.35s all ease;
+-o-transition:0.35s all ease;
+transition:0.35s all ease;}
+.page1 .bg img{width:100%;height:100%}
+.page1 .down{width:80px;height:80px;background:url(img/bg-down-arrow.png) center 25% no-repeat #FFC;position:absolute;bottom:-40px;left:50%;margin-left:-40px;text-align:center;line-height:40px;
+-webkit-border-radius:50%;
+-moz-border-radius:50%;
+-ms-border-radius:50%;
+-o-border-radius:50%;
+border-radius:50%;
+}
+.page1 .down:hover{background-color:#FC0}
+.nav{width:100%;height:160px;position:absolute;top:50px;left:0;
+-webkit-transition:0.5s all ease;
+-moz-transition:0.5s all ease;
+-ms-transition:0.5s all ease;
+-o-transition:0.5s all ease;
+transition:0.5s all ease;}
+.nav_bar{width:800px;margin:0 auto;position:absolute;top:0;left:50%;margin-left:-400px;}
+.nav_bar li{width:25%;text-align:center;
+-webkit-transition:0.5s all ease;
+-moz-transition:0.5s all ease;
+-ms-transition:0.5s all ease;
+-o-transition:0.5s all ease;
+transition:0.5s all ease;}
+.nav_bar li a:hover{color:#fc0;}
+.nav_bar a{font:30px 'Microsoft Yahei';text-align:center;line-height:70px;color:#ffc;}
+.avatar{width:80px;height:80px;position:absolute;top:130px;left:50%;margin-left:-40px;background:#ffc;padding:5px;overflow:hidden;
+-webkit-border-radius:50%;
+-moz-border-radius:50%;
+-ms-border-radius:50%;
+-o-border-radius:50%;
+border-radius:50%;
+-webkit-transition:0.5s all ease;
+-moz-transition:0.5s all ease;
+-ms-transition:0.5s all ease;
+-o-transition:0.5s all ease;
+transition:0.5s all ease;
+z-index:5;
+}
+.avatar a{width:100%;height:100%;overflow:hidden;display:block;position:relative;z-index:5;
+-webkit-border-radius:50%;
+-moz-border-radius:50%;
+-ms-border-radius:50%;
+-o-border-radius:50%;
+border-radius:50%;
+}
+.avatar img{width:100%;height:100%;}
+.avatar em{width:100%;height:0;opacity:0;position:absolute;top:0;left:0;background:#000;}
+
+.avatar:hover em{height:100%;opacity:0.5;}
+.nav_bg{width:0;height:70px;background:#222;position:absolute;top:0;left:50%;opacity:0;
+-webkit-transition:0.8s all ease;
+-moz-transition:0.8s all ease;
+-ms-transition:0.8s all ease;
+-o-transition:0.8s all ease;
+transition:0.8s all ease;
+}
+.intro{width:100%;height:15%;position:relative;margin:400px auto;}
+.intro p{margin:15px auto;font:20px 'Microsoft Yahei';color:#eee;text-align:center;opacity:0;height:25%;
+-webkit-transition:1s all ease;
+-moz-transition:1s all ease;
+-ms-transition:1s all ease;
+-o-transition:1s all ease;
+transition:1s all ease;
+}
+.nav.on{height:70px;top:0px;}
+.nav.on .avatar{width:65px;height:65px;top:25px;margin-left:-30px;}
+.nav.on .nav_bg{width:100%;left:0;opacity:0.8;}
+.nav.on .nav_bar li{width:18%;}
+.nav.on .nav_bar:nth-child(0){margin-right:200px;}
+</style>
+<script src="js/addMouseEvent.js"></script>
+<script>
+function ready(fn){
+	if(document.addEventListener){
+		document.addEventListener('DOMContentLoaded',fn,false);
+	}else{
+		document.attachEvent('onreadystatechange',function(){
+			
+			if(document.readyState == 'complete'){
+				fn();
+			}
+			
+		});
+	}
+}
+ready(function(){
+		
+})
+window.onload=function(){
+	//换页
+	var aPage=document.querySelectorAll('.page');
+	var iPage=0;
+	var bPage=false;
+	addMouseEvent(document,function(down){
+		if(bPage)return;
+		if(down){
+			if(iPage>=aPage.length-1){
+				return;
+			}
+			iPage++;
+			showPage();
+		}else{
+			if(iPage<=0){
+				return;
+			}
+			iPage--;
+			showPage();
+		}
+	})
+	
+	//intro
+	var aIntro=document.querySelectorAll('.intro p');
+	for(var i=0;i<aIntro.length;i++){
+		(function(index){
+			setTimeout(function(){
+				setStyle(aIntro[index],{WebkitTransform:'translate(0,-100px)',MozTransform:'translate(0,-100px)',msTransform:'translate(0,-100px)',OTransform:'translate(0,-100px)',transform:'translate(0,-100px)',opacity:'1'});
+			},(index+1)*250);	
+		})(i);
+		
+	}
+	
+	//nav
+	var oNav=document.querySelector('.nav');
+	var oAvatar=document.querySelector('.avatar');
+	var aNavLi=document.querySelectorAll('.nav_bar li');
+	function setStyle(obj,json){
+		for(var i in json){
+			obj.style[i]=json[i];	
+		}
+	}
+	function showPage(){
+		for(var i=0;i<aPage.length;i++){
+			aPage[i].style.height='0';	
+		}
+		if(iPage==0){
+			aPage[0].timer=setInterval(changeBg,2000);
+			oNav.className='nav';
+			setStyle(aNavLi[1],{marginRight:'0px'})
+		}else{
+			clearInterval(aPage[0].timer);	
+			oNav.className='nav on';
+			setStyle(aNavLi[1],{marginRight:'200px'})
+		}
+		aPage[iPage].style.height='100%';
+		bPage=true;
+		aPage[iPage].addEventListener('transitionend',function(){
+			bPage=false;
+		},false);
+	}
+	for(var i=0;i<aNavLi.length;i++){
+		(function(index){
+			aNavLi[index].onclick=function(){
+				iPage=index;
+				showPage();
+			};
+		})(i);
+	}
+	//首页
+	var iBg=0;
+	var aBg=document.querySelectorAll('.bg');
+	
+	function changeBg(){
+		(iBg>=aBg.length-1)&&(iBg=0);
+		iBg++;
+		for(var i=0;i<aBg.length;i++){
+			aBg[i].style.opacity='0';	
+		}
+		aBg[iBg].style.opacity='1';
+	}
+	
+	clearInterval(aPage[0].timer);
+	aPage[0].timer=setInterval(changeBg,2000)
+	var oDown=document.querySelector('.down');
+	oDown.onclick=function(){
+		iPage++;
+		showPage();
+	};
+		
+}
+</script>
 </head>
 
 <body>
-<div>hello world</div>
+<div class="page page1">
+    <div class="bg" style="opacity:1"><img src="img/header-bg1.jpg"></div>
+    <div class="bg"><img src="img/header-bg2.jpg"></div>
+    <div class="bg"><img src="img/header-bg3.jpg"></div>
+    <div class="bg"><img src="img/header-bg4.jpg"></div>
+    <div class="intro">
+        <p>Hello! Here is Nirvania</p>
+        <p>Programer, front-end developer</p>
+        <p>If you are interested in this, please scroll down</p>
+        <p>or click the down button</p>
+    </div>
+    <a href="javascript:;" class="down"></a>
+</div>
+<div class="page page2"></div>
+<div class="page page3"></div>
+<div class="page page4"></div>
+<div class="nav">
+	<div class="nav_bg"></div>
+	<div class="clear nav_bar">
+            <li class="fl"><a href="javascript:;">Home</a></li>
+            <li class="fl"><a href="javascript:;">Portfolio</a></li>
+            <li class="fl"><a href="javascript:;">About</a></li>
+            <li class="fr"><a href="javascript:;">Contact</a></li>
+    </div>
+    <div class="avatar">
+    	<a href="https://github.com/nirvania/"><img src="img/avatar.png" title="to github"><em></em></a>
+    </div>
+</div>
 </body>
 </html>
