@@ -241,7 +241,8 @@ window.addEventListener('DOMContentLoaded',function(){
 		},16);
 	};
 	
-window.onload=setTimeout(function(){
+window.onload=function(){
+setTimeout(function(){
 	var oLd=document.querySelector('.loading');
 	oC.style.display=oLd.style.display='none';
 	oAvatar.className='avatar';
@@ -375,6 +376,7 @@ window.onload=setTimeout(function(){
 		
 	}
 },500);
+}
 },false);
 </script>
 </head>
