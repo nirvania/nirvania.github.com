@@ -7,7 +7,7 @@
 <style>
 *{margin:0;padding:0}
 html,body{height:100%;overflow:hidden;}
-.loading{min-width:1000px;width:100%;height:100%;position:absolute;top:0;left:0;background:#eee;z-index:5;}
+.loading{min-width:1000px;width:100%;height:100%;position:absolute;top:0;left:0;background:#ffc;z-index:5;}
 .page{min-width:1000px;width:100%;height:100%;position:relative;overflow:hidden;
 -webkit-transition:0.5s all ease;
 -moz-transition:0.5s all ease;
@@ -50,7 +50,7 @@ transition:0.5s all ease;}
 transition:0.5s all ease;}
 .nav_bar li a:hover{color:#fc0;}
 .nav_bar a{font:30px 'Microsoft Yahei';text-align:center;line-height:70px;color:#ffc;}
-.avatar{width:80px;height:80px;position:absolute;top:250px;left:50%;margin-left:-40px;background:#ffc;padding:5px;overflow:hidden;
+.avatar{width:80px;height:80px;position:absolute;top:130px;left:50%;margin-left:-40px;background:#ffc;padding:5px;overflow:hidden;
 -webkit-border-radius:50%;
 -moz-border-radius:50%;
 -ms-border-radius:50%;
@@ -63,6 +63,7 @@ border-radius:50%;
 transition:0.5s all ease;
 z-index:10;
 }
+.avatar.ld{top:250px;}
 .avatar canvas{position:absolute;top:0;left:0;}
 .avatar a{width:100%;height:100%;overflow:hidden;display:block;position:relative;z-index:5;
 -webkit-border-radius:50%;
@@ -208,6 +209,7 @@ window.addEventListener('DOMContentLoaded',function(){
 		return;
 	}
 	var oAvatar=document.querySelector('.avatar');
+	oAvatar.className='avatar ld'
 	var oAvatarImage=oAvatar.querySelector('a img');
 	var oC=document.querySelector('canvas');
 	var gd=oC.getContext('2d');
@@ -239,11 +241,11 @@ window.addEventListener('DOMContentLoaded',function(){
 		},16);
 	};
 	
-window.onload=function(){
+window.onload=setTimeout(function(){
 	var oLd=document.querySelector('.loading');
 	oC.style.display=oLd.style.display='none';
+	oAvatar.className='avatar';
 	clearInterval(oC.timer);
-	oAvatar.style.top='130px';
 	//换页
 	var aPage=document.querySelectorAll('.page');
 	var iPage=0;
@@ -372,7 +374,7 @@ window.onload=function(){
 	function show4(){
 		
 	}
-}
+},500);
 },false);
 </script>
 </head>
