@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>时钟</title>
+<style>
+*{margin:0;padding:0}
+body{background:#603;}
+.clock{width:200px;height:200px;border-radius:50%;margin:50px auto;border:3px solid #000;position:relative;background:#fa0}
+.h{width:6px;height:60px;background:#000;position:absolute;top:50px;left:50%;margin-left:-3px;
+	-webkit-transform-origin:center 50px;
+	-moz-transform-origin:center 50px;
+	-ms-transform-origin:center 50px;
+	-o-transform-origin:center 50px;
+	transform-origin:center 50px;
+	border-radius:50% 50% 0 0}
+.m{width:4px;height:75px;background:#000;position:absolute;top:40px;left:50%;margin-left:-2px;
+	-webkit-transform-origin:center 60px;
+	-moz-transform-origin:center 60px;
+	-ms-transform-origin:center 60px;
+	-o-transform-origin:center 60px;
+	transform-origin:center 60px;
+	border-radius:50% 50% 0 0;}
+.s{width:2px;height:80px;background:red;position:absolute;top:35px;left:50%;margin-left:-1px;
+	-webkit-transform-origin:center 65px;
+	-moz-transform-origin:center 65px;
+	-ms-transform-origin:center 65px;
+	-o-transform-origin:center 65px;
+	transform-origin:center 65px;
+	border-radius:50% 50% 0 0;}
+.top{width:8px ;height:8px; border-radius:50%;background:#f00;position:absolute;top:50%;left:50%;margin-left:-4px;margin-top:-4px;}
+.clock span{display:block;position:absolute;top:0;left:50%;margin-left:-1px;width:2px ;height:7px;background:#000;
+	-webkit-transform-origin:center 100px;
+	-moz-transform-origin:center 100px;
+	-ms-transform-origin:center 100px;
+	-o-transform-origin:center 100px;
+	transform-origin:center 100px;
+	}
+.clock .big{width:4px;height:10px;margin-left:-2px;}
+.big b{width:12px;text-align:center;font-size:10px;position:absolute;top:14px;left:50%;margin-left:-6px;}
+</style>
+<script>
+window.onload=function(){
+	var oH=document.querySelector('.h');
+	var oM=document.querySelector('.m');
+	var oS=document.querySelector('.s');
+	var oClock=document.querySelector('.clock');
+	var N=60;
+	
+	var oDate=new Date();
+	var h=oDate.getHours();
+	var m=oDate
+	
+	function clock(){
+		var oDate=new Date();
+		var h=oDate.getHours();
+		var m=oDate.getMinutes();
+		var s=oDate.getSeconds();
+		oH.style.WebkitTransform='rotate('+(h%12*30+m*0.5)+'deg)'; 
+		oM.style.WebkitTransform='rotate('+(m*6+s*0.1)+'deg)';
+		oS.style.WebkitTransform='rotate('+s*6+'deg)';
+		oH.style.MozTransform='rotate('+(h%12*30+m*0.5)+'deg)'; 
+		oM.style.MozTransform='rotate('+(m*6+s*0.1)+'deg)';
+		oS.style.MozTransform='rotate('+s*6+'deg)';
+		oH.style.msTransform='rotate('+(h%12*30+m*0.5)+'deg)'; 
+		oM.style.msTransform='rotate('+(m*6+s*0.1)+'deg)';
+		oS.style.msTransform='rotate('+s*6+'deg)';
+		oH.style.OTransform='rotate('+(h%12*30+m*0.5)+'deg)'; 
+		oM.style.OTransform='rotate('+(m*6+s*0.1)+'deg)';
+		oS.style.OTransform='rotate('+s*6+'deg)';
+		oH.style.transform='rotate('+(h%12*30+m*0.5)+'deg)'; 
+		oM.style.transform='rotate('+(m*6+s*0.1)+'deg)';
+		oS.style.transform='rotate('+s*6+'deg)';
+
+	}
+	clock();
+	setInterval(clock,1000);
+	
+	for(var i=0;i<N;i++){
+		var oSpan=document.createElement('span');
+		oSpan.style.WebkitTransform='rotate('+i*6+'deg)';
+		oSpan.style.MozTransform='rotate('+i*6+'deg)';
+		oSpan.style.msTransform='rotate('+i*6+'deg)';
+		oSpan.style.OTransform='rotate('+i*6+'deg)';
+		oSpan.style.transform='rotate('+i*6+'deg)';
+		oClock.appendChild(oSpan);
+		if (i%5==0){
+			oSpan.className='big';
+			if(i==0){
+				oSpan.innerHTML='<b>12</b>';	
+			}else{
+				var oB=document.createElement('b');
+				oB.innerHTML=i/5;
+				oB.style.WebkitTransform='rotate(-'+i*6+'deg)';
+				oB.style.MozTransform='rotate(-'+i*6+'deg)';
+				oB.style.msTransform='rotate(-'+i*6+'deg)';
+				oB.style.transform='rotate(-'+i*6+'deg)';
+				oSpan.appendChild(oB);
+			}
+		}
+	}
+		
+}
+</script>
+</head>
+
+<body>
+	<div class="clock">
+    	<div class="h"></div>
+        <div class="m"></div>
+        <div class="s"></div>
+        <div class="top"></div>
+    </div>
+</body>
+</html>

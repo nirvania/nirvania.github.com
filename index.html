@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>welcome to nirvania</title>
 <link rel="stylesheet" href="stylesheets/base.css" />
 <style>
 *{margin:0;padding:0}
@@ -16,8 +16,8 @@ html,body{height:100%;overflow:hidden;}
 transition:0.5s all ease;}
 .page1{width:100%;height:100%;}
 .page2{background:#9f9}
-.page3{background:#963}
-.page4{background:#333}
+.page3{background:#333}
+.page4{background:#963}
 .page5{background:#3F6}
 /*p1*/
 .page1 .bg{width:100%;height:100%;opacity:0;;position:absolute;top:0;left:0;
@@ -64,7 +64,13 @@ transition:0.5s all ease;
 z-index:10;
 }
 .avatar.ld{top:250px;}
-.avatar canvas{position:absolute;top:0;left:0;}
+.avatar canvas{position:absolute;top:0;left:0;
+-webkit-transition:0.8s all ease;
+-moz-transition:0.8s all ease;
+-ms-transition:0.8s all ease;
+-o-transition:0.8s all ease;
+transition:0.8s all ease;
+}
 .avatar a{width:100%;height:100%;overflow:hidden;display:block;position:relative;z-index:5;
 -webkit-border-radius:50%;
 -moz-border-radius:50%;
@@ -197,13 +203,32 @@ transform: translateZ(50px) rotate(90deg);
 }
 .page2 .txt{width:500px;height:30%;position:absolute;top:20%;right:12%;font:18px 'microsoft yahei';color:#555;}
 .page2 .txt p{line-height:30px;}
+.page3 ul{width:100%;height:70%;position:absolute;top:22%;left:0; perspective:800px;transform-style:preserve-3d;}
+.page3 ul li{width:25%;height:100%;box-sizing:border-box;position:absolute;top:0;transform-style:preserve-3d;
+-webkit-transition:0.7s all ease;}
+.page3 .l1{left:-25%;transform:rotateY(40deg) translate(-30px);opacity:0}
+.page3 .l2{left:0;transform:rotateY(25deg) translate(27px)}
+.page3 .l3{left:25%;transform:translateZ(-105px) rotateY(10deg) translate(5px);}
+.page3 .r3{left:50%;transform:translateZ(-105px) rotateY(-10deg) translate(-5px);}
+.page3 .r2{left:75%;transform:rotateY(-25deg) translate(-27px);}
+.page3 .r1{left:100%;transform:rotateY(-40deg) translate(30px);opacity:0}
+.page3 .demo{height:48%;width:96%;position:absolute;left:2%;overflow:hidden;}
+.page3 .demo:nth-child(odd){top:0;}
+.page3 .demo:nth-child(even){bottom:0;}
+.page3 .demo img{width:100%;height:100%;position:absolute;top:0;left:0;}
+.page3 .demo:hover{box-shadow:0 0 20px 5px #00F;}
+.page3 .demo .title{width:100%;height:15%;font:18px 'microsoft yahei';position:absolute;bottom:0;left:0;background:rgba(0,0,0,0.6);color:#fff;text-align:center;}
+#prev,#next{width:60px;height:70px;position:absolute;top:52%;background:#000;font-size:36px;color:#fff;line-height:70px;text-align:center;opacity:0.6;display:none;}
+#prev{left:0;}
+#next{right:0;}
+#prev:hover,#next:hover{opacity:0.9;color:#C33}
 </style>
 <script src="js/addMouseEvent.js"></script>
 <script>
 function d2a(n){
 	return n*Math.PI/180;
 }
-window.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded',function(){
 	if(window.navigator.userAgent.indexOf('Trident')!=-1){
 		alert('亲，请使用最新版火狐或Chrome内核浏览器');	
 		return;
@@ -242,17 +267,20 @@ window.addEventListener('DOMContentLoaded',function(){
 	};
 	
 window.onload=function(){
+oC.style.opacity=0;
 setTimeout(function(){
 	var oLd=document.querySelector('.loading');
-	oC.style.display=oLd.style.display='none';
+	oLd.style.display='none';
 	oAvatar.className='avatar';
 	clearInterval(oC.timer);
 	//换页
 	var aPage=document.querySelectorAll('.page');
 	var iPage=0;
 	var bPage=false;
+	
+	//鼠标滚轮事件
 	addMouseEvent(document,function(down){
-		if(bPage)return;
+		if(bPage) return;
 		if(down){
 			if(iPage>=aPage.length-1){
 				return;
@@ -272,12 +300,13 @@ setTimeout(function(){
 	for(var i=0;i<aIntro.length;i++){
 		(function(index){
 			setTimeout(function(){
+				bPage=true;
 				setStyle(aIntro[index],{WebkitTransform:'translate(0,-100px)',MozTransform:'translate(0,-100px)',msTransform:'translate(0,-100px)',OTransform:'translate(0,-100px)',transform:'translate(0,-100px)',opacity:'1'});
 			},(index+1)*250);	
 		})(i);
 		
 	}
-	
+
 	//nav
 	var oNav=document.querySelector('.nav');
 	var aNavLi=document.querySelectorAll('.nav_bar li');
@@ -292,6 +321,7 @@ setTimeout(function(){
 		setStyle(aNavLi[1],{marginRight:'0px'});
 	}
 	function showPage(){
+		bPage=true;
 		for(var i=0;i<aPage.length;i++){
 			aPage[i].style.height='0';	
 		}
@@ -301,7 +331,6 @@ setTimeout(function(){
 		setStyle(aNavLi[1],{marginRight:'200px'});
 		
 		[show0,show1,show2,show3,show4][iPage]();//数组存函数
-		bPage=true;
 		aPage[iPage].addEventListener('transitionend',function(){
 			bPage=false;
 		},false);
@@ -366,8 +395,41 @@ setTimeout(function(){
 			}
 		}
 	}
+	var aClass=['l1','l2','l3','r3','r2','r1'];
 	function show2(){
-		
+		var oDemo=document.querySelector('.page3 ul');
+		var oPrev=document.querySelector('#prev');
+		var oNext=document.querySelector('#next');
+		oPrev.onmouseover=oNext.onmouseover=oDemo.onmouseover=function(){
+			oPrev.style.display=oNext.style.display='block';
+		};
+		oDemo.onmouseout=function(){
+			oPrev.style.display=oNext.style.display='none';
+		}
+		var aDemoLi=document.querySelectorAll('.page3 li');
+		var bDemo=false
+		oPrev.onclick=function(){
+			if(bDemo) return;
+			bDemo=true;
+			aClass.push(aClass.shift());	
+			for(var i=0;i<aDemoLi.length;i++){
+				aDemoLi[i].className=aClass[i];
+			}
+		}
+		oNext.onclick=function(){
+			if(bDemo) return;
+			bDemo=true;
+			aClass.unshift(aClass.pop());
+			for(var i=0;i<aDemoLi.length;i++){//alert(aClass)
+				aDemoLi[i].className=aClass[i];
+			}
+		}
+		for(var i=0;i<aDemoLi.length;i++){
+			aDemoLi[i].addEventListener('transitionend',function(){
+				bDemo = false;
+			},false);
+		}
+
 	}
 	function show3(){
 		
@@ -375,6 +437,7 @@ setTimeout(function(){
 	function show4(){
 		
 	}
+	
 },500);
 }
 },false);
@@ -475,7 +538,75 @@ setTimeout(function(){
         </div>
     </div>
 </div>
-<div class="page page3"></div>
+<div class="page page3">
+	<ul>
+    	<li class="l1">
+            <a href="demo/jv/index.html" target="_blank" class="demo">
+            	<img src="img/jv.jpg">
+                <div class="title">移动端rem布局</div>
+            </a>
+
+        	<a href="demo/piano/index.html" target="_blank" class="demo">
+            	<img src="img/piano.jpg">
+                <div class="title">简易钢琴</div>
+            </a>
+        </li>
+    	<li class="l2">
+        	<a href="demo/cards/cards.html" target="_blank" class="demo">
+            	<img src="img/cards.jpg">
+                <div class="title">翻纸牌</div>
+            </a>
+        	<a href="demo/round/round.html" target="_blank" class="demo">
+            	<img src="img/round.jpg">
+                <div class="title">圆周运动</div>
+            </a>
+        </li>
+    	<li class="l3">
+            <a href="demo/pages/index.html" target="_blank"  class="demo">
+            	<img src="img/pages.jpg">
+                <div class="title">动态换页</div>
+            </a>
+        	<a href="demo/player/index.html" target="_blank" class="demo">
+            	<img src="img/player.jpg">
+                <div class="title">视频播放器</div>
+            </a>
+        </li>
+    	<li class="r3">
+            <a href="demo/explode/index.html" target="_blank" class="demo">
+            	<img src="img/explode.jpg">
+                <div class="title">爆炸效果</div>
+            </a>
+        	<a href="demo/bar/index.html" target="_blank" class="demo">
+            	<img src="img/bar.jpg">
+                <div class="title">调色进度条</div>
+            </a>
+        </li>
+    	<li class="r2">
+            <a href="demo/clock/index.html" target="_blank" class="demo">
+            	<img src="img/clock.jpg">
+                <div class="title">时钟</div>
+            </a>           
+            <a href="demo/countdown/index.html" target="_blank" class="demo">
+            	<img src="img/countdown.jpg">
+                <div class="title">倒计时幻灯片</div>
+            </a>
+
+        </li>
+    	<li class="r1">
+            <a href="demo/hoop/index.html" target="_blank" class="demo">
+            	<img src="img/hoop.jpg">
+                <div class="title">图片环</div>
+            </a>
+
+        	<a href="demo/fall/index.html" target="_blank" class="demo">
+            	<img src="img/fall.jpg">
+                <div class="title">瀑布流</div>
+            </a>
+        </li>
+    </ul>
+    <a href="javascript:;" id="prev"><</a>
+    <a href="javascript:;" id="next">></a>
+</div>
 <div class="page page4"></div>
 <div class="page page5"></div>
 </body>

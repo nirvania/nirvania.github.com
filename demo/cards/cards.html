@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0}
+body{background:#630}
+.box{width:880px;height:320px;overflow:hidden;margin:100px auto;background:#620;box-shadow:inset 1px 1px 6px #222;}
+.card{width:98px;height:138px;position:relative;float:left;margin:10px;border-radius:8px;transition:0.8s all ease;transform-style:preserve-3d;}
+.card div{width:98px;height:138px;border-radius:8px;background:url(img/p1.jpg);position:absolute;top:0;left:0}
+.card .back{transform:translateZ(1px);background-position:-449px -294px;}
+.card .front{transform:scale(-1,1) translateZ(-1px);}
+.c1 .front{background-position:-4px -2px}
+.c2 .front{background-position:-115px -2px}
+.c3 .front{background-position:-226px -2px}
+.c4 .front{background-position:-337px -2px}
+.c5 .front{background-position:-448px -2px}
+.c6 .front{background-position:-4px -148px}
+.c7 .front{background-position:-115px -148px}
+.c8 .front{background-position:-226px -148px}
+.c9 .front{background-position:-337px -148px}
+.c10 .front{background-position:-448px -148px}
+.c11 .front{background-position:-4px -294px}
+.c12 .front{background-position:-115px -294px}
+.c13 .front{background-position:-226px -294px}
+.c0 .front{background-position:-337px -294px}
+</style>
+<script>
+window.onload=function(){
+	var oBox=document.querySelector('.box')
+	var N=14;
+	function Card(n){
+		var _this=this;
+		this.oDiv=document.createElement('div');
+		this.oDiv.className='card c'+n;
+		oBox.appendChild(this.oDiv);
+		this.oFront=document.createElement('div');
+		this.oFront.className='front';
+		this.oDiv.appendChild(this.oFront);
+		this.oBack=document.createElement('div');
+		this.oBack.className='back';
+		this.oDiv.appendChild(this.oBack);
+		this.oDiv.onclick=function(){
+			_this.flop();	
+		}
+	}
+	
+	Card.prototype.flop=function(){
+		var _this=this;
+		this.oDiv.style.transform='perspective(500px) rotateY(180deg)';
+		this.timer=setTimeout(function(){
+			_this.oDiv.style.transform='perspective(500px) rotateY(0deg)';
+		},1500)
+	};
+	
+	for(var i=0;i<N;i++){
+		var oCard=new Card(rnd(0,13));	
+	}
+	
+	function rnd(m,n){
+		return parseInt(Math.random()*(n-m)+m);	
+	}
+};
+</script>
+</head>
+
+<body>
+<div class="box">
+</div>
+</body>
+</html>

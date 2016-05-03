@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>倒计时m</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+.box{width:500px; height:300px; margin:100px auto; position:relative; top:0; left:0; overflow:hidden;}
+.box ul{position:absolute; left:0; top:0; }
+.box ul li{width:500px; height:300px; float:left; text-align:center; line-height:300px; font-size:50px;}
+.box ol{ position:absolute; bottom:20px; width:400px; left:50%; margin-left:-200px;}
+.box ol li{float:left; width:80px; height:10px; background:#ccc; margin:10px;}
+.box ol li em{display:block; width:0; height:100%; background:#399;}
+</style>
+<script src="move.js"></script>
+<script>
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var oUl=oBox.children[0];
+	var oOl=oBox.children[1];
+	var aEm=document.getElementsByTagName('em');
+	var i=0;
+	oUl.style.width=oUl.children.length*oUl.children[0].offsetWidth+'px';
+	function next(){
+		move(aEm[i],{width:80},{type:'linear',end:function(){
+			i++;
+			if(i==aEm.length){
+				i=0;	
+			}
+			move(oUl,{left:-i*500},{type:'linear',end:function(){
+				for(var i=0;i<aEm.length;i++){
+					aEm[i].style.width=0;
+				}
+				next();	
+			}})
+		}})	;
+	}
+	next();
+	
+	
+};
+</script>
+</head>
+
+<body>
+<div class="box" id="box">
+	<ul>
+		<li style="background:#f90;">4</li>
+		<li style="background:#09f;">3</li>
+		<li style="background:#0f9;">2</li>
+		<li style="background:#9f0;">1</li>
+	</ul>
+	<ol>
+		<li><em></em></li>
+		<li><em></em></li>
+		<li><em></em></li>
+		<li><em></em></li>
+	</ol>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

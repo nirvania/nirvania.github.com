@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0}
+a{text-decoration:none;font:12px 'microsoft yahei';}
+.clear:after{content:'';display:block;clear:both;}
+.fl{float:left;}
+.fr{float:right;}
+.box{width:800px;height:400px;margin:50px auto;background:#363;text-align:left;position:relative;}
+.video{width:88%;display:none;text-align:center;margin:auto;}
+.ctrl{width:100%;height:50px;background:#111;position:absolute;bottom:0;left:0;}
+.on{width:120px;height:100%;margin-left:10px;}
+.ctrl a{width:30px;height:30px;border-radius:50%;text-align:center;line-height:30px;margin:0;padding:0;float:left;margin-top:10px;margin-right:8px;color:#555;background:#fff;}
+.progress{width:450px;height:50px;}
+.barbox{width:400px;height:10px;background:#fff;margin-top:20px;margin-left:5px;position:relative;}
+.bar{width:0;background:#06F;height:10px;}
+.barbtn{width:20px;height:14px;border-radius:6px;background:#ccc;display:block;position:absolute;top:-2px;left:0;margin-left:-10px;}
+.time{width:40px;font:12px 'microsoft yahei';height:100%;line-height:50px;color:#fff;}
+.audio{width:180px;height:50px;}
+.vol{width:40px;}
+.volbox{width:100px;height:10px;background:#fff;margin-top:20px;position:relative;margin-right:30px;}
+.volbtn{width:20px;height:14px;border-radius:6px;background:#ccc;display:block;position:absolute;top:-2px;left:0;margin-left:-10px;}
+.volbar{width:0;background:#06F;height:10px;}
+.ctrl .mute{color:red;text-decoration:line-through;}
+</style>
+<script>
+function toDou(n){
+	return n<10?n='0'+n:n=''+n;	
+}
+window.onload=function(){
+	var oV=document.querySelector('video');
+	var oPlay=document.querySelector('.play');
+	var oPause=document.querySelector('.pause');
+	var oStop=document.querySelector('.stop');
+	var oVol=document.querySelector('.vol');
+	var oTime=document.querySelector('.time');
+	var oBarBox=document.querySelector('.barbox');
+	var oVolBox=document.querySelector('.volbox');
+	var oBar=document.querySelector('.bar');
+	var oVolBar=document.querySelector('.volbar');
+	var oBarBtn=document.querySelector('.barbtn');
+	var oVolBtn=document.querySelector('.volbtn');
+	
+	oPlay.onclick=function(){
+		oV.style.display='block';
+		oV.play();
+	};
+	oPause.onclick=function(){
+		oV.pause();
+	};
+	oStop.onclick=function(){
+		oV.currentTime=0;
+		oV.pause();	
+		oV.style.display='none';
+	}
+	oVol.onclick=function(){
+		if(this.className=='vol fl'){
+			this.className='vol fl mute';
+			oV.mute=true;
+		}else{
+			this.className='vol fl';	
+			oV.mute=false;
+		}
+	}
+	function time(){
+		oTime.innerHTML=toDou(Math.floor(oV.currentTime/60))+':'+toDou(Math.floor(oV.currentTime%60))+'\/'+toDou(Math.floor(oV.duration/60))+':'+toDou(Math.floor(oV.duration%60));
+	}
+	oV.volume=1;
+	oV.ontimeupdate=function(){
+		time();
+		oBar.style.width=oBarBtn.style.left=oV.currentTime/oV.duration*oBarBox.offsetWidth+'px';
+	};
+	
+	oBarBtn.onmousedown=function(ev){
+		var disX=ev.pageX-oBarBtn.offsetLeft;
+		document.onmousemove=function(ev){
+			var l=ev.pageX-disX+10;
+			if(l<0){
+				l=0;	
+			}else if(l>oBarBox.offsetWidth){
+				l=oBarBox.offsetWidth;	
+			}
+			oBar.style.width=oBarBtn.style.left=l+'px';
+			oV.currentTime=l/oBarBox.offsetWidth*oV.duration;
+		};
+		document.onmouseup=function(){
+			document.onmousemove=null;
+			document.onmouseup=null;
+		};
+		return false;
+	}
+	
+	oVolBtn.onmousedown=function(ev){
+		var disX=ev.pageX-oVolBtn.offsetLeft;
+		document.onmousemove=function(ev){
+			var l=ev.pageX-disX+10;
+			if(l<0){
+				l=0;	
+			}else if(l>oVolBox.offsetWidth){
+				l=oVolBox.offsetWidth;	
+			}
+			oVolBar.style.width=oVolBtn.style.left=l+'px';
+			oV.volume=l/oBarBox.offsetWidth;
+		};
+		document.onmouseup=function(){
+			document.onmousemove=null;
+			document.onmouseup=null;
+		};
+		return false;
+	}
+	
+};
+</script>
+</head>
+
+<body>
+<div class="box">
+	<video src="http://images.sohu.com/ytv/SH/Coke/64036020120714021103.mp4" class="video"></video>
+    <div class="ctrl clear">
+    	<div class="on clear fl">
+        	<a href="javascript:;" class="play">播放</a>
+        	<a href="javascript:;" class="pause">暂停</a>
+        	<a href="javascript:;" class="stop">停止</a>
+        </div>
+        <div class="progress clear fl">
+        	<div class="barbox fl">
+            	<p class="bar"></p>
+                <em class="barbtn"></em>
+            </div>
+            <div class="time fr">00:00/00:00</div>
+        </div>
+        <div class="audio clear fr">
+        	<a class="vol fl" href="javascript:;">音量</a>
+        	<div class="volbox fr">
+            	<p class="volbar"></p>
+                <em class="volbtn"></em>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

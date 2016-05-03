@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>动态换页</title>
+<style>
+	body{background:#369;}
+	#box{width:366px;margin:100px auto;}
+	#box div{width:100px;height:100px;background:#f30;float:left;margin:10px; border:1px solid #000; text-align:center; font-size:50px; color:#000; line-height:100px;}
+</style>
+<script src="move.js"></script>
+<script>
+window.onload=function(){
+	var oBtn=document.getElementById('btn');
+	var oBox=document.getElementById('box');
+	var aDiv=oBox.children;
+	var aPos=[];
+	var b=false;
+	for(var i=0;i<aDiv.length;i++){
+		aPos.push({left:aDiv[i].offsetLeft,top:aDiv[i].offsetTop});
+	}
+	for(var i=0;i<aDiv.length;i++){
+		aDiv[i].style.position='absolute';
+		aDiv[i].style.left=aPos[i].left+'px';
+		aDiv[i].style.top=aPos[i].top+'px';
+		aDiv[i].style.margin=0;
+	}
+	oBtn.onclick=function(){
+		if(b) return;
+		b=true;
+		for(var i=0;i<aDiv.length;i++){(
+			function(index){
+				setTimeout(function(){
+						move(aDiv[index],{left:0,top:0,width:0,height:0,opacity:0},{end:function(){
+							if(index==aDiv.length-1){
+								for(var i=0;i<aDiv.length;i++){
+									(function(index){
+										setTimeout(function(){
+											move(aDiv[index],{left:aPos[index].left,top:aPos[index].top,width:100,height:100,opacity:1},{end:function(){
+												if(index==0){
+													b=false	
+												}
+											}})	
+										},(aDiv.length-index)*50);
+									})(i);
+								}
+							}
+						}
+						});
+				},index*50);
+			})(i);
+		}
+	};
+	
+};
+</script>
+</head>
+<body>
+	<input type="button" value="收起" id="btn">
+    <div id="box">
+    	<div>1</div>
+    	<div>2</div>
+    	<div>3</div>
+    	<div>4</div>
+    	<div>5</div>
+    	<div>6</div>
+    	<div>7</div>
+    	<div>8</div>
+    	<div>9</div>
+    </div>
+</body>
+</html>

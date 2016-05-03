@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>piano</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+ul{overflow:hidden;width:70%;margin:50px auto;}
+li{float:left; width:calc( 12.5% - 2px ); text-align:center; height:300px; line-height:300px; background:pink; border:1px solid #000;}
+li.on{background:#ccc;}
+</style>
+<script src="sound.js"></script>
+<script>
+window.onload=function(){
+	var aLi = document.querySelectorAll('li');
+	var oA =document.getElementById('a1');
+	document.onkeydown=function(ev){
+		var key = ev.keyCode;
+		tab(key);
+		play(key);
+	};
+	function tab(key){
+		aLi[key-49].className='on';
+	}
+	document.onkeyup=function(){
+		for(var i=0;i<aLi.length;i++){
+			aLi[i].className='';
+		}
+	};
+	function play(key){
+		oA.src = oggSound['sound'+key];
+		oA.play();
+	}
+};
+</script>
+</head>
+
+<body>
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+	<li>6</li>
+	<li>7</li>
+	<li>i</li>
+</ul>
+<audio id="a1"></audio>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>圆周运动</title>
+<style>
+body{background:#969;}
+#box{margin:100px auto;width:400px;height:400px;border:1px solid #222;position:relative;border-radius:50%;text-align:center;line-height:400px;}
+span{width:50px;height:50px;background:aqua;position:absolute;top:0;left:200px;border-radius:50%;margin-top:-25px;margin-left:-25px;}
+</style>
+<script>
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var r=oBox.offsetWidth/2;
+	var N=10;
+	var b=false;
+	
+	for(var i=0;i<N;i++){
+		var oS=document.createElement('span');
+		oBox.appendChild(oS);	
+	}	
+	var aS=oBox.children;
+	oBox.onclick=function(){
+		if(b)return;
+		for(var i=0;i<N;i++){
+			move(aS[i],i*360/N);
+		}
+	}
+
+	function move(obj,target){
+		var dis=target;
+		var count=32;
+		var n=0;
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			b=true;
+			n+=1;
+			var a=1-n/count;
+			var cur= dis*(1-a*a*a);
+			var x=r+Math.sin(d2a(cur))*r;
+			var y=r-Math.cos(d2a(cur))*r;
+			obj.style.left=x+'px';
+			obj.style.top=y+'px';
+			
+			if(n==count){
+				clearInterval(obj.timer)
+				b=false;
+			}
+			
+		},30);
+		
+		
+	}
+	function d2a(dgr){
+		return dgr*Math.PI/180;
+	}
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+	请点击
+	<span id="s"></span>
+</div>
+</body>
+</html>

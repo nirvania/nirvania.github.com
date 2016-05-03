@@ -20,8 +20,6 @@ function addMouseEvent(obj,fn){
 			}	
 		}
 		fn(down);
-		//阻止默认事件
-		oEvent.preventDefault&&oEvent.preventDefault();
 		return false;
 	}
 	obj.onmousewheel = fnWheel;

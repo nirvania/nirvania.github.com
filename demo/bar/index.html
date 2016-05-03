@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>彩色进度条</title>
+<style>
+@keyframes bar{
+	from{left:0}
+	to{left:-685px}	
+}
+body{background:#6CC}
+#s1{color:#f00;margin-left:45px;}
+#s2{color:#00f;}
+.box{width:500px;height:30px;border-radius:20px;border:1px solid #111;margin:300px auto;overflow:hidden;position:relative;}
+.bar{width:1200px;height:300px;position:absolute;left:0;top:0;background:repeating-linear-gradient(-45deg,red 0,red 20px,blue 20px,blue 40px); box-shadow:inset 2px 2px 10px white,inset 2px 2px 30px rgba(255,255,255,0.6);
+	animation-name:bar;
+	animation-duration:4s;
+	animation-iteration-count:infinite;
+	animation-timing-function:linear;
+}
+</style>
+<script>
+window.onload=function(){
+	//var oC1=document.querySelector('#c1');
+	//var oC2=document.querySelector('#c2');
+	var aColor=document.querySelectorAll('input');
+	var oS1=document.querySelector('#s1');
+	var oS2=document.querySelector('#s2');
+	var oBar=document.querySelector('.bar');
+	
+	for(var i=0;i<aColor.length;i++){
+		aColor[i].onchange=function(){
+			oS1.innerHTML=oS1.style.color=aColor[0].value;
+			oS2.innerHTML=oS2.style.color=aColor[1].value;	
+			oBar.style.background='repeating-linear-gradient(-45deg,'+aColor[0].value+' 0,'+aColor[0].value+' 20px,'+aColor[1].value+' 20px,'+aColor[1].value+' 40px)'
+		}
+	}
+	
+	
+};
+</script>
+</head>
+
+<body> 
+颜色：<input type="color" value="#ff0000" id="c1"> <input type="color" value="#0000ff" id="c2"><br />
+<span id="s1">#ff0000</span> <span id="s2">#0000ff</span>
+<div class="box">
+	<div class="bar"></div>
+</div>
+</body>
+</html>
