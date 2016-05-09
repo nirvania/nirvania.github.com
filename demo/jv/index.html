@@ -92,11 +92,11 @@ h3{color:#fff;font:normal 0.7rem 'microsoft yahei';line-height:0.7rem;padding-to
 .copyright{text-align:center;margin-top:0.6rem;font:0.5rem/0.5rem 'microsoft yahei';color:#999;}
 </style>
 <script>
-(function(win,doc){
-	win.onload=win.onresize=function(){
-		doc.documentElement.style.fontSize = doc.documentElement.clientWidth*(20/320)+'px';
+(function(){
+	window.onload=window.onresize=function(){
+		document.documentElement.style.fontSize = doc.documentElement.clientWidth*(20/320)+'px';
 	};
-})(window,document);
+})();
 </script>
 </head>
 
